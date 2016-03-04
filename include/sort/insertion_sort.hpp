@@ -17,7 +17,7 @@ namespace {
  * in: size the number of elements
  **/
 template <typename T>
-void insertion_sort_inplace(T *type,size_t size)
+inline void insertion_sort_inplace(T *type,size_t size)
 {
 	int min;	// index of minimum
 
