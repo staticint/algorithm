@@ -1,13 +1,21 @@
 #ifndef ALGORITHM_SORT_SELECTION_SORT_HPP
 #define ALGORITHM_SORT_SELECTION_SORT_HPP
 
-
 #include <utility>
 #include <vector>
 
 namespace algorithm::sort {
 namespace {
 
+/**
+ * selection_sort_inplace
+ * Sort values in place. Time complexity O(n^2). Space complexity O(1).
+ * This function is not boundry safe and should only be accessed by 
+ * functions that implement type/boundary safety.
+ * 
+ * in: type template value of a comparable type
+ * in: size the number of elements
+ **/
 template <typename T>
 void selection_sort_inplace(T *type,size_t size)
 {
@@ -28,8 +36,9 @@ void selection_sort_inplace(T *type,size_t size)
 
 
 
-void selection_sort_inplace(std::vector<int> &input) {
-	selection_sort_inplace<int>(input.data(),input.size());
+template <typename T>
+void selection_sort(std::vector<T> &input) {
+	selection_sort_inplace<T>(input.data(),input.size());
 }
 
 
