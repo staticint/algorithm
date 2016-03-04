@@ -1,0 +1,47 @@
+plugins {
+        id 'native-component'
+        id 'cpp'
+}
+
+model {
+        components {
+                algo(NativeExecutableSpec) {
+                        binaries.all {
+				if (toolChain in Clang) {
+                                	cppCompiler.args "-std=c++1z"
+                                	//cppCompiler.args "-stdlib=libstdc++"
+                                	cppCompiler.args "-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"
+                                	//linker.args "-L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib"
+				}
+                                cppCompiler.args "-g"
+                                // cppCompiler.args "-O3"
+                        }   
+                        sources {
+                                cpp {                                                                                                                                                  
+                                        source.srcDir "src"
+                                        source.include "**/*.cpp"
+                                        exportedHeaders.srcDir "include"
+                                        exportedHeaders.include "**/*.h", "**/*.hpp"
+                                }                                                                                                                                                      
+                        }                                                                                                                                                              
+                }                                                                                                                                                                      
+        }                                                                                                                                                                              
+        toolChains {
+                clang(Clang) {
+			path "/usr/local/Cellar/llvm/3.6.2/bin"
+			eachPlatform { tools ->
+            			tools.cppCompiler.executable = "clang++"
+        		}
+		}                                                                                                                                                           
+        }                                                                                                                                                                              
+}                                                                                                                                                                                      
+
+task detect {
+    doLast {
+        println(Os.isFamily(Os.FAMILY_WINDOWS))
+        println(Os.isFamily(Os.FAMILY_MAC))
+        println(Os.isFamily(Os.FAMILY_UNIX))
+    }   
+}
+                                                                                                                        
+task cc dependsOn(':algoExecutable') {}
